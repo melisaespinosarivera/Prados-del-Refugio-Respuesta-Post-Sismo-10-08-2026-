@@ -554,118 +554,141 @@ st.markdown(
 # MODULO 1: PANEL DE CONTROL Y DIAGNOSTICO
 # -------------------------------------------------------------
 if pagina == "Panel de Control y Diagnóstico":
-  c1, c2, c3 = st.columns(3)
-  total_censados = len(df_priv)
-  afectados_aptos = (df_priv["inmueble_afectado"] == "Si").sum()
-  afectados_comunes = (df_com["inmueble_afectado"] == "Si").sum()
+    c1, c2, c3 = st.columns(3)
+    total_censados = len(df_priv)
+    afectados_aptos = (df_priv["inmueble_afectado"] == "Si").sum()
+    afectados_comunes = (df_com["inmueble_afectado"] == "Si").sum()
 
-  with c1:
-    st.markdown(
-        f"""
+    with c1:
+        st.markdown(
+            f"""
             <div class="kpi-container">
                 <div class="kpi-label">Censo Unidades Privadas</div>
                 <div class="kpi-value">{total_censados}</div>
                 <div class="kpi-sub">Torres A (9), B (9), C (10)</div>
             </div>
         """,
-        unsafe_allow_html=True,
-    )
-  with c2:
-    porcentaje_afect = (
-        round((afectados_aptos / total_censados * 100))
-        if total_censados > 0
-        else 0
-    )
-    st.markdown(
-        f"""
+            unsafe_allow_html=True,
+        )
+
+    with c2:
+        porcentaje_afect = (
+            round((afectados_aptos / total_censados * 100))
+            if total_censados > 0
+            else 0
+        )
+        st.markdown(
+            f"""
             <div class="kpi-container">
                 <div class="kpi-label">Inmuebles con Afectación</div>
                 <div class="kpi-value">{afectados_aptos}</div>
                 <div class="kpi-sub">{porcentaje_afect}% del total censado</div>
             </div>
         """,
-        unsafe_allow_html=True,
-    )
-  with c3:
-    st.markdown(
-        f"""
+            unsafe_allow_html=True,
+        )
+
+    with c3:
+        st.markdown(
+            f"""
             <div class="kpi-container">
                 <div class="kpi-label">Zonas Comunes Afectadas</div>
                 <div class="kpi-value">{afectados_comunes} / {len(df_com)}</div>
                 <div class="kpi-sub">Evaluación locativa</div>
             </div>
         """,
-        unsafe_allow_html=True,
+            unsafe_allow_html=True,
+        )
+
+    st.write("")
+    st.write("")
+
+    g1, g2 = st.columns(2)
+
+    with g1:
+        df_torres = (
+            df_priv.groupby(["torre", "inmueble_afectado"])
+            .size()
+            .reset_index(name="conteo")
+        )
+        fig1 = px.bar(
+            df_torres,
+            x="torre",
+            y="conteo",
+            color="inmueble_afectado",
+            title="Consolidado de Afectaciones por Torre",
+            barmode="stack",
+            color_discrete_map={"Si": "#e05a2b", "No": "#2f3e46"},
+            category_orders={"torre": ["Torre A", "Torre B", "Torre C"]},
+            labels={
+                "torre": "Torre",
+                "conteo": "Número de Inmuebles",
+                "inmueble_afectado": "Reporte de Daño",
+            },
+        )
+        fig1.update_layout(
+            paper_bgcolor="rgba(0,0,0,0)",
+            plot_bgcolor="rgba(0,0,0,0)",
+            font=dict(family="Montserrat", size=12),
+            legend_title_text="Reporte de Daño",
+        )
+        st.plotly_chart(fig1, use_container_width=True)
+
+    with g2:
+        df_com_agrup = (
+            df_com.groupby(["unidad", "inmueble_afectado"])
+            .size()
+            .reset_index(name="conteo")
+            if "unidad" in df_com.columns
+            else df_com
+        )
+
+        fig2 = px.bar(
+            df_com_agrup,
+            x="unidad",
+            y="conteo" if "conteo" in df_com_agrup.columns else "inmueble_afectado",
+            color="inmueble_afectado",
+            title="Diagnóstico Técnico en Áreas Comunes",
+            color_discrete_map={"Si": "#e05a2b", "No": "#2f3e46"},
+            labels={
+                "unidad": "Área Común",
+                "conteo": "Cantidad",
+                "inmueble_afectado": "Afectación",
+            },
+        )
+        fig2.update_layout(
+            paper_bgcolor="rgba(0,0,0,0)",
+            plot_bgcolor="rgba(0,0,0,0)",
+            font=dict(family="Montserrat", size=12),
+            xaxis_title="Área Común",
+            yaxis_title="Cantidad",
+            legend_title_text="Afectación",
+        )
+        st.plotly_chart(fig2, use_container_width=True)
+
+    st.write("---")
+    st.subheader("Inventario Nominal de Apartamentos")
+    st.caption("Filtro por bloque con resguardo estricto de Habeas Data.")
+
+    torres_disponibles = list(df_priv["torre"].unique())
+    torre_sel = st.selectbox(
+        "Seleccionar Bloque:",
+        torres_disponibles if len(torres_disponibles) > 0 else ["Torre A"],
     )
 
-  st.write("")
-  st.write("")
+    cols_mostrar = ["unidad", "inmueble_afectado", "autoriza_datos"]
+    cols_exist = [c for c in cols_mostrar if c in df_priv.columns]
 
-  g1, g2 = st.columns(2)
-  with g1:
-    df_torres = (
-        df_priv.groupby(["torre", "inmueble_afectado"])
-        .size()
-        .reset_index(name="conteo")
+    df_vista = df_priv[df_priv["torre"] == torre_sel][cols_exist].rename(
+        columns={
+            "unidad": "Apartamento",
+            "inmueble_afectado": "Afectación Reportada",
+            "autoriza_datos": "Autorización Póliza",
+        }
     )
-    fig1 = px.bar(
-        df_torres,
-        x="Torre",
-        y="Conteo",
-        color="inmueble_afectado",
-        title="Consolidado de Afectaciones por Torre",
-        barmode="stack",
-        color_discrete_map={"Si": "#e05a2b", "No": "#2f3e46"},
-        category_orders={"torre": ["Torre A", "Torre B", "Torre C"]},
-    )
-    fig1.update_layout(
-        paper_bgcolor="rgba(0,0,0,0)",
-        plot_bgcolor="rgba(0,0,0,0)",
-        font=dict(family="Montserrat", size=12),
-        legend_title_text="Reporte Daño",
-    )
-    st.plotly_chart(fig1, use_container_width=True)
+    st.dataframe(df_vista, use_container_width=True, hide_index=True)
 
-  with g2:
-    fig2 = px.bar(
-        df_com,
-        x="Unidad",
-        y="Inmueble_afectado",
-        title="Diagnóstico Técnico en Áreas Comunes",
-        color="inmueble_afectado",
-        color_discrete_map={"Si": "#e05a2b", "No": "#2f3e46"},
-    )
-    fig2.update_layout(
-        paper_bgcolor="rgba(0,0,0,0)",
-        plot_bgcolor="rgba(0,0,0,0)",
-        font=dict(family="Montserrat", size=12),
-        xaxis_title="",
-        yaxis_title="",
-        legend_title_text="Afectación",
-    )
-    st.plotly_chart(fig2, use_container_width=True)
-
-  st.write("---")
-  st.subheader("Inventario Nominal de Apartamentos")
-  st.caption("Filtro por bloque con resguardo estricto de Habeas Data.")
-  torres_disponibles = list(df_priv["torre"].unique())
-  torre_sel = st.selectbox(
-      "Seleccionar Bloque:",
-      torres_disponibles if len(torres_disponibles) > 0 else ["Torre A"],
-  )
-
-  cols_mostrar = ["unidad", "inmueble_afectado", "autoriza_datos"]
-  cols_exist = [c for c in cols_mostrar if c in df_priv.columns]
-
-  df_vista = df_priv[df_priv["torre"] == torre_sel][cols_exist].rename(
-      columns={
-          "unidad": "Apartamento",
-          "inmueble_afectado": "Afectación Reportada",
-          "autoriza_datos": "Autorización Póliza",
-      }
-  )
-  st.dataframe(df_vista, use_container_width=True, hide_index=True)
-  mostrar_banner_habeas_data()
+    mostrar_banner_habeas_data()
 
 # -------------------------------------------------------------
 # MODULO 2: PARTICIPA EN LA RECUPERACION (FASES, JSON Y EXCEL)
