@@ -478,15 +478,7 @@ def normalizar_columnas_censo(df_raw):
 # -------------------------------------------------------------
 # MENU LATERAL
 # -------------------------------------------------------------
-st.sidebar.markdown(
-    """
-    <div style="padding: 5px 0 15px 0;">
-        <span style="font-family: 'Playfair Display', serif; font-size: 20px; font-weight: 700; color: #1f2421;">Prados del Refugio</span><br>
-        <span style="font-size: 11px; color: #e05a2b; letter-spacing: 1.5px; text-transform: uppercase;">Puesto de Mando Unificado</span>
-    </div>
-""",
-    unsafe_allow_html=True,
-)
+
 
 st.sidebar.markdown("---")
 st.sidebar.markdown(
