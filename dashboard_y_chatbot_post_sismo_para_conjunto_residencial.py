@@ -181,7 +181,7 @@ def mostrar_banner_habeas_data():
         <div class="legal-card">
             <div class="legal-title">Marco de Protección de Datos Personales (Ley 1581 de 2012 / Decreto 1377 de 2013)</div>
             <p class="legal-text">
-                El **Conjunto Residencial Prados del Refugio**, en calidad de Responsable del Tratamiento de Datos, garantiza que la información recolectada mediante los censos de diagnóstico post-sismo se encuentra amparada bajo el principio de finalidad estricta. Los datos personales de contacto, identificación y fotografías serán utilizados única y exclusivamente para la atención de la emergencia, la radicación del expediente formal ante la compañía aseguradora y la coordinación de los comités de trabajo, resguardando la confidencialidad y el derecho fundamental al **Habeas Data** de todos los copropietarios y residentes.
+                El Conjunto Residencial Prados del Refugio, en calidad de Responsable del Tratamiento de Datos, garantiza que la información recolectada mediante los censos de diagnóstico post-sismo se encuentra amparada bajo el principio de finalidad estricta. Los datos personales de contacto, identificación y fotografías serán utilizados única y exclusivamente para la atención de la emergencia, la radicación del expediente formal ante la compañía aseguradora y la coordinación de los comités de trabajo, resguardando la confidencialidad y el derecho fundamental al **Habeas Data** de todos los copropietarios y residentes.
             </p>
         </div>
     """,
@@ -482,7 +482,7 @@ def normalizar_columnas_censo(df_raw):
 st.sidebar.markdown(
     """
     <div style="padding: 5px 0 15px 0;">
-        <span style="font-family: 'Playfair Display', serif; font-size: 20px; font-weight: 700; color: ##FFFFFF;">Prados del Refugio</span><br>
+        <span style="font-family: 'Playfair Display', serif; font-size: 20px; font-weight: 700; color: ##FFFFFF;">Conjunto Residencial Prados del Refugio</span><br>
         <span style="font-size: 11px; color: #e05a2b; letter-spacing: 1.5px; text-transform: uppercase;">Puesto de Mando Unificado</span>
     </div>
 """,
@@ -544,7 +544,7 @@ st.markdown(
     """
     <div class="hero-banner">
         <div class="hero-title">Conjunto Residencial Prados del Refugio</div>
-        <div class="hero-subtitle">Sistema Integrado de Informacion Post-Sismo · Cali</div>
+        <div class="hero-subtitle">Sistema Integrado de Información Post-Sismo 10/08/2026· Cali, Colombia</div>
     </div>
 """,
     unsafe_allow_html=True,
@@ -604,34 +604,34 @@ if pagina == "Panel de Control y Diagnóstico":
   g1, g2 = st.columns(2)
   with g1:
     df_torres = (
-        df_priv.groupby(["torre", "inmueble_afectado"])
+        df_priv.groupby(["Torre", "inmueble_afectado"])
         .size()
         .reset_index(name="conteo")
     )
     fig1 = px.bar(
         df_torres,
-        x="torre",
-        y="conteo",
+        x="Torre",
+        y="Conteo",
         color="inmueble_afectado",
         title="Consolidado de Afectaciones por Torre",
         barmode="stack",
         color_discrete_map={"Si": "#e05a2b", "No": "#2f3e46"},
-        category_orders={"torre": ["Torre A", "Torre B", "Torre C"]},
+        category_orders={"Torre": ["Torre A", "Torre B", "Torre C"]},
     )
     fig1.update_layout(
         paper_bgcolor="rgba(0,0,0,0)",
         plot_bgcolor="rgba(0,0,0,0)",
         font=dict(family="Montserrat", size=12),
-        legend_title_text="Reporte Dano",
+        legend_title_text="Reporte Daño",
     )
     st.plotly_chart(fig1, use_container_width=True)
 
   with g2:
     fig2 = px.bar(
         df_com,
-        x="unidad",
-        y="inmueble_afectado",
-        title="Diagnostico Tecnico en Areas Comunes",
+        x="Unidad",
+        y="Inmueble_afectado",
+        title="Diagnóstico Técnico en Áreas Comunes",
         color="inmueble_afectado",
         color_discrete_map={"Si": "#e05a2b", "No": "#2f3e46"},
     )
@@ -641,7 +641,7 @@ if pagina == "Panel de Control y Diagnóstico":
         font=dict(family="Montserrat", size=12),
         xaxis_title="",
         yaxis_title="",
-        legend_title_text="Afectacion",
+        legend_title_text="Afectación",
     )
     st.plotly_chart(fig2, use_container_width=True)
 
