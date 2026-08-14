@@ -489,11 +489,7 @@ st.sidebar.markdown(
     unsafe_allow_html=True,
 )
 
-st.sidebar.markdown("---")
-st.sidebar.markdown(
-    "<span style='font-size: 11px; font-weight: 700; color: ##FFFFFF; letter-spacing: 1px; text-transform: uppercase;'>Cargar Censo (Excel / Forms)</span>",
-    unsafe_allow_html=True,
-)
+
 st.sidebar.markdown("---")
 st.sidebar.markdown(
     "<span style='font-size: 11px; font-weight: 700; color: #FFFFFF;"
