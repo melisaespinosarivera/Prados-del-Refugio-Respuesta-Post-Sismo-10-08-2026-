@@ -1044,7 +1044,7 @@ elif pagina == "Participa en la Recuperación":
   # ---------------------------------------------------------
     # SEMÁFORO DE PRIORIDADES EDITABLE POR LOS RESIDENTES
     # ---------------------------------------------------------
-    st.write("---")
+  st.write("---")
     st.markdown("#### Semáforo de Prioridades y Avance Operativo")
     st.caption(
         "Consulte o modifique las tareas de cada estado. Los cambios se"
