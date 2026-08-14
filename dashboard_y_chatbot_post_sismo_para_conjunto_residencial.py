@@ -342,16 +342,22 @@ def cargar_datos_semaforo():
           " comunes.\n• Instalación de mesas comunitarias por fases."
       ),
   }
+  if "datos_semaforo" in st.session_state:
+    return st.session_state["datos_semaforo"]
   if os.path.exists(ARCHIVO_SEMAFORO):
     try:
       with open(ARCHIVO_SEMAFORO, "r", encoding="utf-8") as f:
-        return json.load(f)
+        datos = json.load(f)
+        st.session_state["datos_semaforo"] = datos
+        return datos
     except Exception:
-      return semaforo_base
+      pass
+  st.session_state["datos_semaforo"] = semaforo_base
   return semaforo_base
 
 
 def guardar_datos_semaforo(datos):
+  st.session_state["datos_semaforo"] = datos
   with open(ARCHIVO_SEMAFORO, "w", encoding="utf-8") as f:
     json.dump(datos, f, ensure_ascii=False, indent=2)
 
@@ -1035,54 +1041,140 @@ elif pagina == "Participa en la Recuperación":
       ),
   )
 
-  st.write("---")
+  # ---------------------------------------------------------
+    # SEMÁFORO DE PRIORIDADES EDITABLE POR LOS RESIDENTES
+    # ---------------------------------------------------------
+    st.write("---")
+    st.markdown("#### Semáforo de Prioridades y Avance Operativo")
+    st.caption(
+        "Consulte o modifique las tareas de cada estado. Los cambios se"
+        " guardarán de forma permanente y podrán descargarse en Excel."
+    )
 
-  col_urg, col_proc, col_comp = st.columns(3)
-  with col_urg:
-    st.markdown(
-        """
+    datos_sem = cargar_datos_semaforo()
+
+    with st.expander(
+        "Modificar las tareas del Semáforo de Prioridades", expanded=False
+    ):
+      with st.form("form_editar_semaforo"):
+        col_ed_urg, col_ed_proc, col_ed_comp = st.columns(3)
+
+        with col_ed_urg:
+          st.markdown(
+              "<b style='color: #c92a2a;'>Urgente / Crítico:</b>",
+              unsafe_allow_html=True,
+          )
+          txt_urg = st.text_area(
+              "Lista Urgente:",
+              value=datos_sem.get("urgente", ""),
+              height=140,
+              label_visibility="collapsed",
+          )
+
+        with col_ed_proc:
+          st.markdown(
+              "<b style='color: #d97706;'>En Proceso:</b>",
+              unsafe_allow_html=True,
+          )
+          txt_proc = st.text_area(
+              "Lista En Proceso:",
+              value=datos_sem.get("proceso", ""),
+              height=140,
+              label_visibility="collapsed",
+          )
+
+        with col_ed_comp:
+          st.markdown(
+              "<b style='color: #2b8a3e;'>Completado:</b>",
+              unsafe_allow_html=True,
+          )
+          txt_comp = st.text_area(
+              "Lista Completado:",
+              value=datos_sem.get("completado", ""),
+              height=140,
+              label_visibility="collapsed",
+          )
+
+        btn_guardar_sem = st.form_submit_button(
+            "Guardar Cambios en el Semáforo"
+        )
+        if btn_guardar_sem:
+          nuevos_datos_sem = {
+              "urgente": txt_urg,
+              "proceso": txt_proc,
+              "completado": txt_comp,
+          }
+          guardar_datos_semaforo(nuevos_datos_sem)
+          st.success("Semáforo de prioridades actualizado con éxito.")
+          st.rerun()
+
+    # Visualización gráfica de las 3 tarjetas del semáforo
+    col_urg, col_proc, col_comp = st.columns(3)
+
+    items_urg = "".join([
+        f"<li>{line.replace('•', '').strip()}</li>"
+        for line in datos_sem.get("urgente", "").split("\n")
+        if line.strip()
+    ])
+    items_proc = "".join([
+        f"<li>{line.replace('•', '').strip()}</li>"
+        for line in datos_sem.get("proceso", "").split("\n")
+        if line.strip()
+    ])
+    items_comp = "".join([
+        f"<li>{line.replace('•', '').strip()}</li>"
+        for line in datos_sem.get("completado", "").split("\n")
+        if line.strip()
+    ])
+
+    with col_urg:
+      st.markdown(
+          f"""
             <div class="traffic-card" style="border-top: 3px solid #c92a2a;">
-                <div class="traffic-header text-urg"><span class="dot-urg"></span>Urgente / Critico</div>
+                <div class="traffic-header text-urg"><span class="dot-urg"></span>Urgente / Crítico</div>
                 <ul class="traffic-list">
-                    <li>Validar censo de los 29 apartamentos reales.</li>
-                    <li>Radicacion de poderes para tramite de seguro.</li>
-                    <li>Inspeccion visual tecnica en Torres B y C.</li>
+                    {items_urg}
                 </ul>
             </div>
         """,
-        unsafe_allow_html=True,
-    )
+          unsafe_allow_html=True,
+      )
 
-  with col_proc:
-    st.markdown(
-        """
+    with col_proc:
+      st.markdown(
+          f"""
             <div class="traffic-card" style="border-top: 3px solid #f59f00;">
                 <div class="traffic-header text-proc"><span class="dot-proc"></span>En Proceso</div>
                 <ul class="traffic-list">
-                    <li>Evaluacion tecnica de piscina y gradas.</li>
-                    <li>Cotizacion de reparaciones locativas no estructurales.</li>
-                    <li>Consolidacion del expediente digital de ajuste.</li>
-                    <li>Revision de acometidas e instalaciones de gas.</li>
+                    {items_proc}
                 </ul>
             </div>
         """,
-        unsafe_allow_html=True,
-    )
+          unsafe_allow_html=True,
+      )
 
-  with col_comp:
-    st.markdown(
-        """
+    with col_comp:
+      st.markdown(
+          f"""
             <div class="traffic-card" style="border-top: 3px solid #2b8a3e;">
                 <div class="traffic-header text-don"><span class="dot-don"></span>Completado</div>
                 <ul class="traffic-list">
-                    <li>Aviso formal de siniestro a la aseguradora.</li>
-                    <li>Habilitación del panel PMU en linea.</li>
-                    <li>Registro fotográfico preliminar de zonas comunes.</li>
-                    <li>Instalación de mesas comunitarias por fases.</li>
+                    {items_comp}
                 </ul>
             </div>
         """,
-        unsafe_allow_html=True,
+          unsafe_allow_html=True,
+      )
+
+    # Botón de descarga en formato Excel
+    excel_semaforo = exportar_semaforo_a_excel(datos_sem)
+    st.download_button(
+        label="Descargar Semáforo de Prioridades (Excel)",
+        data=excel_semaforo,
+        file_name="Semaforo_Prioridades_Prados_del_Refugio.xlsx",
+        mime=(
+            "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+        ),
     )
 
   # ---------------------------------------------------------
