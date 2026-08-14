@@ -374,9 +374,7 @@ def generar_estructura_exacta():
   aptos_b = [
       f"{piso}0{num}B" for piso in range(1, 5) for num in [1, 2]
   ] + ["501B"]
-  aptos_c = [
-      f"{piso}0{num}C" for piso in range(1, 6) for num in [1, 2]
-  ] + ["601C"]
+  aptos_c = ["101C"] + [f"{piso}0{num}C" for piso in range(2, 6) for num in [1, 2]] + ["601C"]
 
   registros = []
   for a in aptos_a:
@@ -402,7 +400,7 @@ def generar_estructura_exacta():
 
   comunes = [
       "Pasillos",
-      "Porteria",
+      "Portería",
       "Gradas",
       "Parqueadero",
       "Salón Social",
@@ -411,9 +409,9 @@ def generar_estructura_exacta():
   registros_c = []
   for com in comunes:
     registros_c.append({
-        "torre": "Áreas Comunes",
+        "Torre": "Áreas Comunes",
         "unidad": com,
-        "tipo": "Comun",
+        "tipo": "Común",
         "propietario": "Administración General",
         "cedula": "NIT Copropiedad",
         "telefono": "PBX Principal",
@@ -529,12 +527,12 @@ if len(df_com) == 0:
 
 st.sidebar.markdown("---")
 pagina = st.sidebar.radio(
-    "Navegacion Principal:",
+    "Navegación Principal:",
     [
-        "Panel de Control y Diagnostico",
-        "Participa en la Recuperacion",
-        "Poliza y Reclamacion de Seguros",
-        "Planos Estructurales e Inspeccion",
+        "Panel de Control y Diagnóstico",
+        "Participa en la Recuperación",
+        "Póliza y Reclamación de Seguros",
+        "Planos Estructurales e Inspección",
         "Asistente Virtual",
     ],
 )
@@ -553,7 +551,7 @@ st.markdown(
 # -------------------------------------------------------------
 # MODULO 1: PANEL DE CONTROL Y DIAGNOSTICO
 # -------------------------------------------------------------
-if pagina == "Panel de Control y Diagnostico":
+if pagina == "Panel de Control y Diagnóstico":
   c1, c2, c3 = st.columns(3)
   total_censados = len(df_priv)
   afectados_aptos = (df_priv["inmueble_afectado"] == "Si").sum()
@@ -579,7 +577,7 @@ if pagina == "Panel de Control y Diagnostico":
     st.markdown(
         f"""
             <div class="kpi-container">
-                <div class="kpi-label">Inmuebles con Afectacion</div>
+                <div class="kpi-label">Inmuebles con Afectación</div>
                 <div class="kpi-value">{afectados_aptos}</div>
                 <div class="kpi-sub">{porcentaje_afect}% del total censado</div>
             </div>
@@ -592,7 +590,7 @@ if pagina == "Panel de Control y Diagnostico":
             <div class="kpi-container">
                 <div class="kpi-label">Zonas Comunes Afectadas</div>
                 <div class="kpi-value">{afectados_comunes} / {len(df_com)}</div>
-                <div class="kpi-sub">Evaluacion locativa</div>
+                <div class="kpi-sub">Evaluación locativa</div>
             </div>
         """,
         unsafe_allow_html=True,
