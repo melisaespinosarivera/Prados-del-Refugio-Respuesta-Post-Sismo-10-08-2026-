@@ -35,7 +35,24 @@ st.markdown(
         color: #1f2421 !important;
         font-weight: 500 !important;
     }
-
+    /* Correccion de visibilidad para la caja de subir archivos */
+    section[data-testid="stSidebar"] [data-testid="stFileUploadDropzone"] {
+        background-color: #ffffff !important;
+        border: 2px dashed #cbd5e1 !important;
+    }
+    section[data-testid="stSidebar"] [data-testid="stFileUploadDropzone"] span,
+    section[data-testid="stSidebar"] [data-testid="stFileUploadDropzone"] small,
+    section[data-testid="stSidebar"] [data-testid="stFileUploadDropzone"] div,
+    section[data-testid="stSidebar"] [data-testid="stFileUploadDropzone"] p {
+        color: #495057 !important;
+        font-weight: 500 !important;
+    }
+    section[data-testid="stSidebar"] [data-testid="stFileUploadDropzone"] button {
+        background-color: #2f3e46 !important;
+        color: #ffffff !important;
+        border: none !important;
+        font-weight: 600 !important;
+    }
     .hero-banner {
         background: linear-gradient(135deg, #1f2421 0%, #2f3e46 60%, #e05a2b 100%);
         padding: 36px 44px;
@@ -159,7 +176,7 @@ def mostrar_banner_habeas_data():
         <div class="legal-card">
             <div class="legal-title">Marco de Protección de Datos Personales (Ley 1581 de 2012 / Decreto 1377 de 2013)</div>
             <p class="legal-text">
-                El Conjunto Residencial Prados del Refugio, en calidad de Responsable del Tratamiento de Datos, garantiza que la informacion recolectada mediante los censos de diagnostico post-sismo se encuentra amparada bajo el principio de finalidad estricta. Los datos personales de contacto, identificacion y fotografias seran utilizados unica y exclusivamente para la atencion de la emergencia, la radicacion del expediente formal ante la compania aseguradora y la coordinacion de las brigadas de auxilio, resguardando la confidencialidad y el derecho fundamental al Habeas Data de todos los copropietarios y residentes.
+                El **Conjunto Residencial Prados del Refugio**, en calidad de Responsable del Tratamiento de Datos, garantiza que la información recolectada mediante los censos de diagnóstico post-sismo se encuentra amparada bajo el principio de finalidad estricta. Los datos personales de contacto, identificación y fotografías serán utilizados única y exclusivamente para la atención de la emergencia, la radicación del expediente formal ante la compañía aseguradora y la coordinación de los comités de trabajo, resguardando la confidencialidad y el derecho fundamental al **Habeas Data** de todos los copropietarios y residentes.
             </p>
         </div>
     """,
