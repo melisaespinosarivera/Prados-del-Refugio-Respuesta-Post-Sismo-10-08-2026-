@@ -604,7 +604,7 @@ if pagina == "Panel de Control y Diagnóstico":
   g1, g2 = st.columns(2)
   with g1:
     df_torres = (
-        df_priv.groupby(["Torre", "inmueble_afectado"])
+        df_priv.groupby(["torre", "inmueble_afectado"])
         .size()
         .reset_index(name="conteo")
     )
@@ -616,7 +616,7 @@ if pagina == "Panel de Control y Diagnóstico":
         title="Consolidado de Afectaciones por Torre",
         barmode="stack",
         color_discrete_map={"Si": "#e05a2b", "No": "#2f3e46"},
-        category_orders={"Torre": ["Torre A", "Torre B", "Torre C"]},
+        category_orders={"torre": ["Torre A", "Torre B", "Torre C"]},
     )
     fig1.update_layout(
         paper_bgcolor="rgba(0,0,0,0)",
