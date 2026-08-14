@@ -317,15 +317,85 @@ def exportar_fases_a_excel(datos_fases):
     df_f.to_excel(writer, index=False, sheet_name="Estructura_Operativa")
   return buffer.getvalue()
 
-
 # -------------------------------------------------------------
-# 2. PERSISTENCIA DE INSCRIPCIONES INDIVIDUALES (ARCHIVO CSV)
+# 2. PERSISTENCIA DEL SEMÁFORO DE PRIORIDADES (JSON Y EXCEL)
+# -------------------------------------------------------------
+ARCHIVO_SEMAFORO = "semaforo_prioridades.json"
+
+
+def cargar_datos_semaforo():
+  semaforo_base = {
+      "urgente": (
+          "• Validar censo de los 28 apartamentos reales.\n• Radicación de"
+          " poderes para trámite de seguro.\n• Inspección visual técnica en"
+          " Torres B y C."
+      ),
+      "proceso": (
+          "• Evaluación técnica de piscina y gradas.\n• Cotización de"
+          " reparaciones locativas no estructurales.\n• Consolidación del"
+          " expediente digital de ajuste.\n• Revisión de acometidas e"
+          " instalaciones de gas."
+      ),
+      "completado": (
+          "• Aviso formal de siniestro a la aseguradora.\n• Habilitación del"
+          " panel PMU en línea.\n• Registro fotográfico preliminar de zonas"
+          " comunes.\n• Instalación de mesas comunitarias por fases."
+      ),
+  }
+  if os.path.exists(ARCHIVO_SEMAFORO):
+    try:
+      with open(ARCHIVO_SEMAFORO, "r", encoding="utf-8") as f:
+        return json.load(f)
+    except Exception:
+      return semaforo_base
+  return semaforo_base
+
+
+def guardar_datos_semaforo(datos):
+  with open(ARCHIVO_SEMAFORO, "w", encoding="utf-8") as f:
+    json.dump(datos, f, ensure_ascii=False, indent=2)
+
+
+def exportar_semaforo_a_excel(datos_semaforo):
+  filas = []
+  for item in datos_semaforo.get("urgente", "").split("\n"):
+    if item.strip():
+      filas.append({
+          "Estado / Prioridad": "Urgente / Crítico",
+          "Tarea": item.replace("•", "").strip(),
+          "Fecha de Actualización": datetime.now().strftime("%Y-%m-%d"),
+      })
+  for item in datos_semaforo.get("proceso", "").split("\n"):
+    if item.strip():
+      filas.append({
+          "Estado / Prioridad": "En Proceso",
+          "Tarea": item.replace("•", "").strip(),
+          "Fecha de Actualización": datetime.now().strftime("%Y-%m-%d"),
+      })
+  for item in datos_semaforo.get("completado", "").split("\n"):
+    if item.strip():
+      filas.append({
+          "Estado / Prioridad": "Completado",
+          "Tarea": item.replace("•", "").strip(),
+          "Fecha de Actualización": datetime.now().strftime("%Y-%m-%d"),
+      })
+  df_sem = pd.DataFrame(filas)
+  buffer = io.BytesIO()
+  with pd.ExcelWriter(buffer, engine="openpyxl") as writer:
+    df_sem.to_excel(writer, index=False, sheet_name="Semaforo_Prioridades")
+  return buffer.getvalue()
+    
+# -------------------------------------------------------------
+# 3. PERSISTENCIA DE INSCRIPCIONES INDIVIDUALES (ARCHIVO CSV)
+# -------------------------------------------------------------
+# -------------------------------------------------------------
+# 3. PERSISTENCIA DE INSCRIPCIONES INDIVIDUALES (CSV Y EXCEL)
 # -------------------------------------------------------------
 ARCHIVO_INSCRIPCIONES = "inscripciones_voluntarios.csv"
 
 
 def guardar_inscripcion(
-    nombre, torre, apto, télefono, profesión, mesa, disponibilidad
+    nombre, torre, apto, telefono, profesion, mesa, disponibilidad
 ):
   registro = {
       "Fecha_Registro": [datetime.now().strftime("%Y-%m-%d %H:%M:%S")],
@@ -338,33 +408,52 @@ def guardar_inscripcion(
       "Disponibilidad": [disponibilidad],
   }
   df_nuevo = pd.DataFrame(registro)
+
+  # Guardar en archivo CSV
   if os.path.exists(ARCHIVO_INSCRIPCIONES):
-    df_existente = pd.read_csv(ARCHIVO_INSCRIPCIONES)
-    df_final = pd.concat([df_existente, df_nuevo], ignore_index=True)
+    try:
+      df_existente = pd.read_csv(ARCHIVO_INSCRIPCIONES)
+      df_final = pd.concat([df_existente, df_nuevo], ignore_index=True)
+    except Exception:
+      df_final = df_nuevo
   else:
     df_final = df_nuevo
+
   df_final.to_csv(ARCHIVO_INSCRIPCIONES, index=False)
+
+  # Guardar en la sesión activa de Streamlit
+  st.session_state["df_voluntarios"] = df_final
   return df_final
 
 
 def cargar_inscripciones():
+  if "df_voluntarios" in st.session_state:
+    return st.session_state["df_voluntarios"]
+
   if os.path.exists(ARCHIVO_INSCRIPCIONES):
-    return pd.read_csv(ARCHIVO_INSCRIPCIONES)
-  else:
-    return pd.DataFrame(columns=[
-        "Fecha_Registro",
-        "Nombre_Completo",
-        "Torre",
-        "Apartamento",
-        "Teléfono",
-        "Profesión_Habilidad",
-        "Mesa_Asignada",
-        "Disponibilidad",
-    ])
+    try:
+      df_cargado = pd.read_csv(ARCHIVO_INSCRIPCIONES)
+      st.session_state["df_voluntarios"] = df_cargado
+      return df_cargado
+    except Exception:
+      pass
+
+  df_vacio = pd.DataFrame(columns=[
+      "Fecha_Registro",
+      "Nombre_Completo",
+      "Torre",
+      "Apartamento",
+      "Teléfono",
+      "Profesión_Habilidad",
+      "Mesa_Asignada",
+      "Disponibilidad",
+  ])
+  st.session_state["df_voluntarios"] = df_vacio
+  return df_vacio
 
 
 # -------------------------------------------------------------
-# 3. ESTRUCTURA BASE DE DATOS (29 APTOS + 6 AREAS COMUNES)
+# 4. ESTRUCTURA BASE DE DATOS (29 APTOS + 6 AREAS COMUNES)
 # -------------------------------------------------------------
 def generar_estructura_exacta():
   np.random.seed(42)
@@ -996,29 +1085,33 @@ elif pagina == "Participa en la Recuperación":
         unsafe_allow_html=True,
     )
 
+  # ---------------------------------------------------------
+  # FORMULARIO DE POSTULACIÓN DE VOLUNTARIOS
+  # ---------------------------------------------------------
   st.write("---")
   st.markdown("#### Formulario de Postulación de Nuevos Voluntarios")
   st.caption(
-      "Diligencie sus datos para sumarse a alguna de las mesas de trabajo."
+      "Diligencie sus datos para sumarse a alguna de las mesas de trabajo de la"
+      " copropiedad."
   )
 
   with st.form("form_inscripcion_individual", clear_on_submit=True):
     f_col1, f_col2, f_col3 = st.columns(3)
     with f_col1:
       nombre_input = st.text_input(
-          "Nombre y Apellidos *", placeholder="Ej: Melisa Espinosa"
+          "Nombre y Apellidos *", placeholder="Ejemplo: Melisa Espinosa"
       )
       torre_input = st.selectbox("Torre *", ["Torre A", "Torre B", "Torre C"])
       apto_input = st.text_input(
-          "Apartamento *", placeholder="Ej: 301A / 402B / 601C"
+          "Apartamento *", placeholder="Ejemplo: 301A / 402B / 601C"
       )
     with f_col2:
       tel_input = st.text_input(
-          "WhatsApp de Contacto *", placeholder="Ej: 3151234567"
+          "WhatsApp de Contacto *", placeholder="Ejemplo: 3151234567"
       )
       profesion_input = st.text_input(
           "Profesión / Habilidad",
-          placeholder="Ej: Ingeniería / Datos / Contabilidad / Logistica",
+          placeholder="Ejemplo: Ingeniería / Datos / Contabilidad / Logística",
       )
     with f_col3:
       mesa_input = st.selectbox(
@@ -1029,7 +1122,7 @@ elif pagina == "Participa en la Recuperación":
               "3. Seguros y Reclamaciones",
               "4. Reconstrucción e Infraestructura",
               "5. Comunicaciones y Atención",
-              "6. Administracion y Finanzas",
+              "6. Administración y Finanzas",
           ],
       )
       disp_input = st.selectbox(
@@ -1043,15 +1136,21 @@ elif pagina == "Participa en la Recuperación":
 
     acepta_datos = st.checkbox(
         "Autorizo el tratamiento de mis datos de contacto para la atención de"
-        " la emergencia (Política de Protección de Datos Personales, Ley 1581/2012) *"
+        " la emergencia (Ley 1581 de 2012) *"
     )
     btn_enviar_vol = st.form_submit_button("Confirmar Inscripción en Mesa")
 
     if btn_enviar_vol:
       if not nombre_input or not apto_input or not tel_input:
-        st.error("Por favor complete los campos obligatorios (*).")
+        st.error(
+            "Por favor, complete todos los campos obligatorios marcados con"
+            " asterisco (*)."
+        )
       elif not acepta_datos:
-        st.warning("Debe autorizar el tratamiento de datos para registrarse.")
+        st.warning(
+            "Debe autorizar el tratamiento de datos personales para formalizar"
+            " el registro."
+        )
       else:
         guardar_inscripcion(
             nombre_input,
@@ -1063,15 +1162,19 @@ elif pagina == "Participa en la Recuperación":
             disp_input,
         )
         st.success(
-            f"Gracias, {nombre_input}. Su postulación para '{mesa_input}' ha"
-            " sido guardada."
+            f"¡Muchas gracias, {nombre_input}! Su postulación para"
+            f" '{mesa_input}' ha sido registrada y guardada con éxito."
         )
+        st.rerun()
 
   st.write("---")
   st.markdown("#### Registro Consolidado de Voluntarios Inscritos")
   df_vol = cargar_inscripciones()
+
   if len(df_vol) > 0:
-    st.caption(f"Total registrados en tiempo real: {len(df_vol)}")
+    st.caption(
+        f"Total de voluntarios registrados en tiempo real: {len(df_vol)}"
+    )
     st.dataframe(
         df_vol[[
             "Fecha_Registro",
@@ -1080,12 +1183,17 @@ elif pagina == "Participa en la Recuperación":
             "Apartamento",
             "Mesa_Asignada",
             "Disponibilidad",
-        ]],
+        ]].rename(
+            columns={
+                "Fecha_Registro": "Fecha y Hora",
+                "Nombre_Completo": "Nombre Completo",
+                "Mesa_Asignada": "Mesa Asignada",
+            }
+        ),
         use_container_width=True,
         hide_index=True,
     )
 
-    # Exportacion a Excel de los voluntarios
     buffer_vol = io.BytesIO()
     with pd.ExcelWriter(buffer_vol, engine="openpyxl") as writer:
       df_vol.to_excel(writer, index=False, sheet_name="Voluntarios_PMU")
@@ -1099,7 +1207,8 @@ elif pagina == "Participa en la Recuperación":
     )
   else:
     st.info(
-        "Aun no hay voluntarios registrados. Diligencie el formulario superior."
+        "Aún no hay voluntarios registrados. Diligencie el formulario superior"
+        " para postularse."
     )
 
   mostrar_banner_habeas_data()
