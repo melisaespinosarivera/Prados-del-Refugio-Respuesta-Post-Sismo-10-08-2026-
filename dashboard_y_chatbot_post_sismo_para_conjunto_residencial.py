@@ -23,17 +23,22 @@ st.markdown(
         font-family: 'Montserrat', sans-serif;
     }
     
-    section[data-testid="stSidebar"] {
-        background-color: #f8f9fa !important;
-        border-right: 1px solid #e9ecef;
+    section[data-testid="stSidebar"] [data-testid="stFileUploadDropzone"] {
+        background-color: #ffffff !important;
+        border: 2px dashed #cbd5e1 !important;
     }
-    section[data-testid="stSidebar"] span, 
-    section[data-testid="stSidebar"] label, 
-    section[data-testid="stSidebar"] p,
-    section[data-testid="stSidebar"] div,
-    section[data-testid="stSidebar"] a {
-        color: #1f2421 !important;
+    section[data-testid="stSidebar"] [data-testid="stFileUploadDropzone"] span,
+    section[data-testid="stSidebar"] [data-testid="stFileUploadDropzone"] small,
+    section[data-testid="stSidebar"] [data-testid="stFileUploadDropzone"] div,
+    section[data-testid="stSidebar"] [data-testid="stFileUploadDropzone"] p {
+        color: #495057 !important;
         font-weight: 500 !important;
+    }
+    section[data-testid="stSidebar"] [data-testid="stFileUploadDropzone"] button {
+        background-color: #2f3e46 !important;
+        color: #ffffff !important;
+        border: none !important;
+        font-weight: 600 !important;
     }
     /* Correccion de visibilidad para la caja de subir archivos */
     section[data-testid="stSidebar"] [data-testid="stFileUploadDropzone"] {
