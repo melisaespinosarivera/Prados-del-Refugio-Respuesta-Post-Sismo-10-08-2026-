@@ -157,7 +157,7 @@ def mostrar_banner_habeas_data():
   st.markdown(
       """
         <div class="legal-card">
-            <div class="legal-title">Marco de Proteccion de Datos Personales (Ley 1581 de 2012 / Decreto 1377 de 2013)</div>
+            <div class="legal-title">Marco de Protección de Datos Personales (Ley 1581 de 2012 / Decreto 1377 de 2013)</div>
             <p class="legal-text">
                 El Conjunto Residencial Prados del Refugio, en calidad de Responsable del Tratamiento de Datos, garantiza que la informacion recolectada mediante los censos de diagnostico post-sismo se encuentra amparada bajo el principio de finalidad estricta. Los datos personales de contacto, identificacion y fotografias seran utilizados unica y exclusivamente para la atencion de la emergencia, la radicacion del expediente formal ante la compania aseguradora y la coordinacion de las brigadas de auxilio, resguardando la confidencialidad y el derecho fundamental al Habeas Data de todos los copropietarios y residentes.
             </p>
@@ -176,92 +176,92 @@ ARCHIVO_FASES = "estructura_fases_comites.json"
 def cargar_datos_fases():
   fases_base = {
       "fase_1": {
-          "titulo": "1. Evaluacion de Danos y Seguridad",
+          "titulo": "1. Evaluación de Daños y Seguridad",
           "descripcion": (
-              "Inspeccion tecnica visual de afectaciones estructurales en"
-              " Torres A, B, C y zonas comunes (gradas, parqueadero, piscina)."
+              "Inspección técnica visual de afectaciones estructurales en"
+              " Torres A, B, C y zonas comunes (porteria, gradas, parqueadero, piscina y salón social)."
               " Verificacion de habitabilidad y redes."
           ),
-          "tareas": (
+          "Tareas": (
               "• Recorrido tecnico por niveles.\n• Marcacion de fisuras no"
               " estructurales a 45° vs. fisuras de estuco.\n• Verificacion de"
               " acometidas e instalaciones principales de gas."
           ),
-          "personas": (
-              "Arq. Roberto Gomez (Apto 302A), Ing. Carlos Mina (Apto 501B)"
+          "Personas": (
+              "EJ: Arq. Roberto Gomez (Apto 302A), Ing. Carlos Mina (Apto 501B)"
           ),
       },
       "fase_2": {
-          "titulo": "2. Censo y Caracterizacion",
+          "titulo": "2. Censo y Caracterización",
           "descripcion": (
-              "Consolidacion de la base de datos de los 29 apartamentos y areas"
+              "Consolidación de la base de datos de los 28 apartamentos y áreas"
               " comunes, reporte de afectaciones y autorizaciones formales de"
               " Habeas Data."
           ),
-          "tareas": (
+          "Tareas": (
               "• Cierre del censo de unidades privadas en Torres A, B y C.\n•"
-              " Consolidacion de autorizaciones firmadas para el ajustador.\n•"
-              " Acompanamiento y orientacion a propietarios."
+              " Consolidación de autorizaciones firmadas para el ajustador.\n•"
+              " Acompanamiento y orientación a propietarios."
           ),
-          "personas": "Melisa Espinosa (Apto 601C), Diana Perez (Apto 102A)",
+          "personas": "Ejemplo: Melisa Espinosa (Apto 202B), etc",
       },
       "fase_3": {
           "titulo": "3. Seguros y Reclamaciones",
           "descripcion": (
-              "Tramite formal del siniestro ante la compania de seguros,"
-              " integracion de expedientes por unidad e interlocucion con el"
+              "Tramite formal del siniestro ante la compañia de seguros,"
+              " integración de expedientes por unidad e interlocucion con el"
               " perito ajustador."
           ),
           "tareas": (
-              "• Notificacion formal del siniestro bajo amparo de terremoto.\n•"
-              " Radicacion de poderes de representacion de copropietarios.\n•"
-              " Acompanamiento en sitio durante la inspeccion tecnica del"
+              "• Notificación formal del siniestro bajo amparo de terremoto.\n•"
+              " Radicación de poderes de representación de copropietarios.\n•"
+              " Acompañamiento en sitio durante la inspeccion técnica del"
               " ajustador."
           ),
-          "personas": "Dra. Claudia Ortiz (Apto 201B)",
+          "personas": " Ejemplo: Pedro Pérez (Apto xxx)",
       },
       "fase_4": {
-          "titulo": "4. Reconstruccion e Infraestructura",
-          "descripcion": (
-              "Recepcion y evaluacion de propuestas tecnicas para obras de"
-              " mamposteria, reparacion de zonas comunes y adecuaciones"
+          "titulo": "4. Reconstrucción e Infraestructura",
+          "descripción": (
+              "Recepción y evaluación de propuestas técnicas para obras de"
+              " mamposteria, reparación de zonas comunes y adecuaciones"
               " prioritarias."
           ),
           "tareas": (
-              "• Cuadro comparativo de minimo 3 cotizaciones por concepto.\n•"
-              " Supervision de obras menores en zonas comunes.\n• Cronograma de"
-              " intervencion en fachadas y cerramientos."
+              "• Cuadro comparativo de mínimo 3 cotizaciones por concepto.\n•"
+              " Supervisión de obras menores en zonas comunes.\n• Cronograma de"
+              " intervención en fachadas y cerramientos."
           ),
-          "personas": "Ing. Fernando Castro (Apto 402C)",
+          "personas": " Ejemplo : Ing. Fernando Castro (Apto 402C)",
       },
       "fase_5": {
-          "titulo": "5. Comunicaciones y Atencion a Residentes",
+          "titulo": "5. Comunicaciones y Atención a Residentes",
           "descripcion": (
-              "Gestion de canales oficiales de informacion, atencion de"
-              " inquietudes y emision periodica de boletines sobre el estado de"
+              "Gestión de canales oficiales de información, atención de"
+              " inquietudes y emisión períodica de boletines sobre el estado de"
               " la copropiedad."
           ),
           "tareas": (
-              "• Emision de boletines oficiales del PMU.\n• Moderacion de"
-              " canales de consulta y atencion comunitaria.\n• Actualizacion"
+              "• Emisión de boletines oficiales del PMU.\n• Moderación de"
+              " canales de consulta y atención comunitaria.\n• Actualización"
               " permanente del panel informativo."
           ),
-          "personas": "Comite de Comunicaciones, Laura Benitez (Apto 201B)",
+          "personas": "Comite de Comunicaciones, Ejemplo: Laura Benitez (Apto 201B)",
       },
       "fase_6": {
-          "titulo": "6. Administracion, Finanzas y Proveedores",
-          "descripcion": (
-              "Control y ejecucion del fondo de imprevistos, cotizacion"
+          "titulo": "6. Administración, Finanzas y Proveedores",
+          "descripción": (
+              "Control y ejecución del fondo de imprevistos, cotización"
               " transparente con proveedores de obra y rendicion de cuentas en"
               " tiempo real."
           ),
           "tareas": (
               "• Balance del fondo de imprevistos y flujo de caja.\n•"
-              " Comparativo de minimo 3 cotizaciones por servicio tecnico.\n•"
-              " Publicacion de soportes contables del siniestro."
+              " Comparativo de mínimo 3 cotizaciones por servicio técnico.\n•"
+              " Publicación de soportes contables del siniestro."
           ),
           "personas": (
-              "Administracion Prados del Refugio, Revisor Fiscal, Tesoreria"
+              "Ejemplo: Administración Prados del Refugio, Revisor Fiscal, Tesorería"
           ),
       },
   }
@@ -287,7 +287,7 @@ def exportar_fases_a_excel(datos_fases):
         "Descripcion General": v.get("descripcion", ""),
         "Tareas Detalladas": v.get("tareas", ""),
         "Personas Asignadas / Voluntarios": v.get("personas", ""),
-        "Fecha Actualizacion": datetime.now().strftime("%Y-%m-%d %H:%M"),
+        "Fecha Actualizacioón": datetime.now().strftime("%Y-%m-%d %H:%M"),
     })
   df_f = pd.DataFrame(lista_filas)
   buffer = io.BytesIO()
@@ -383,16 +383,16 @@ def generar_estructura_exacta():
       "Porteria",
       "Gradas",
       "Parqueadero",
-      "Salon Social",
+      "Salón Social",
       "Piscina",
   ]
   registros_c = []
   for com in comunes:
     registros_c.append({
-        "torre": "Areas Comunes",
+        "torre": "Áreas Comunes",
         "unidad": com,
         "tipo": "Comun",
-        "propietario": "Administracion General",
+        "propietario": "Administración General",
         "cedula": "NIT Copropiedad",
         "telefono": "PBX Principal",
         "correo": "admin@pradosdelrefugio.com",
@@ -648,8 +648,8 @@ if pagina == "Panel de Control y Diagnostico":
 # -------------------------------------------------------------
 # MODULO 2: PARTICIPA EN LA RECUPERACION (FASES, JSON Y EXCEL)
 # -------------------------------------------------------------
-elif pagina == "Participa en la Recuperacion":
-  st.subheader("Estructura Operativa y Comites por Fases")
+elif pagina == "Participa en la Recuperación":
+  st.subheader("Estructura Operativa y Cómites por Fases")
   st.markdown(
       """
         <p style="font-size: 14px; color: #495057; line-height: 1.6; margin-bottom: 20px;">
@@ -942,9 +942,9 @@ elif pagina == "Participa en la Recuperacion":
                 <div class="traffic-header text-don"><span class="dot-don"></span>Completado</div>
                 <ul class="traffic-list">
                     <li>Aviso formal de siniestro a la aseguradora.</li>
-                    <li>Habilitacion del panel PMU en linea.</li>
-                    <li>Registro fotografico preliminar de zonas comunes.</li>
-                    <li>Instalacion de mesas comunitarias por fases.</li>
+                    <li>Habilitación del panel PMU en linea.</li>
+                    <li>Registro fotográfico preliminar de zonas comunes.</li>
+                    <li>Instalación de mesas comunitarias por fases.</li>
                 </ul>
             </div>
         """,
@@ -952,7 +952,7 @@ elif pagina == "Participa en la Recuperacion":
     )
 
   st.write("---")
-  st.markdown("#### Formulario de Postulacion de Nuevos Voluntarios")
+  st.markdown("#### Formulario de Postulación de Nuevos Voluntarios")
   st.caption(
       "Diligencie sus datos para sumarse a alguna de las mesas de trabajo."
   )
@@ -972,18 +972,18 @@ elif pagina == "Participa en la Recuperacion":
           "WhatsApp de Contacto *", placeholder="Ej: 3151234567"
       )
       profesion_input = st.text_input(
-          "Profesion / Habilidad",
-          placeholder="Ej: Ingenieria / Datos / Contabilidad / Logistica",
+          "Profesión / Habilidad",
+          placeholder="Ej: Ingeniería / Datos / Contabilidad / Logistica",
       )
     with f_col3:
       mesa_input = st.selectbox(
           "Mesa en la que desea participar *",
           [
-              "1. Evaluacion de Danos y Seguridad",
-              "2. Censo y Caracterizacion",
+              "1. Evaluación de Daños y Seguridad",
+              "2. Censo y Caracterización",
               "3. Seguros y Reclamaciones",
-              "4. Reconstruccion e Infraestructura",
-              "5. Comunicaciones y Atencion",
+              "4. Reconstrucción e Infraestructura",
+              "5. Comunicaciones y Atención",
               "6. Administracion y Finanzas",
           ],
       )
@@ -997,10 +997,10 @@ elif pagina == "Participa en la Recuperacion":
       )
 
     acepta_datos = st.checkbox(
-        "Autorizo el tratamiento de mis datos de contacto para la atencion de"
-        " la emergencia (Ley 1581/2012) *"
+        "Autorizo el tratamiento de mis datos de contacto para la atención de"
+        " la emergencia (Política de Protección de Datos Personales, Ley 1581/2012) *"
     )
-    btn_enviar_vol = st.form_submit_button("Confirmar Inscripcion en Mesa")
+    btn_enviar_vol = st.form_submit_button("Confirmar Inscripción en Mesa")
 
     if btn_enviar_vol:
       if not nombre_input or not apto_input or not tel_input:
@@ -1018,7 +1018,7 @@ elif pagina == "Participa en la Recuperacion":
             disp_input,
         )
         st.success(
-            f"Gracias, {nombre_input}. Su postulacion para '{mesa_input}' ha"
+            f"Gracias, {nombre_input}. Su postulación para '{mesa_input}' ha"
             " sido guardada."
         )
 
@@ -1067,25 +1067,25 @@ elif pagina == "Poliza y Reclamacion de Seguros":
   c_p1, c_p2 = st.columns([1, 1])
   with c_p1:
     st.markdown("""
-            ### Ficha Tecnica de la Poliza
+            ### Ficha Técnica de la Póliza
             * **Aseguradora:** Seguros del Estado / Copropiedades
-            * **Regimen:** Poliza de Zonas Comunes y Privadas con Amparo de Terremoto
+            * **Régimen:** Póliza de Zonas Comunes y Privadas con Amparo de Terremoto
             * **Vigencia:** 2026 - 2027
-            * **Deducible Sismo:** 10% del valor de la perdida con minimo legal
+            * **Deducible Sismo:** Ejemplo: 10% del valor de la perdida con minimo legal
             * **Estado:** Aviso de siniestro emitido formalmente
         """)
   with c_p2:
     st.markdown("""
-            ### Protocolo de Radicacion
-            1. **Consolidacion del Censo:** Cierre de afectaciones en los 29 apartamentos.
-            2. **Filtro de Habeas Data:** Inclusion estricta de copropietarios con poder firmado.
+            ### Protocolo de Radicación
+            1. **Consolidación del Censo:** Cierre de afectaciones en los 29 apartamentos.
+            2. **Filtro de Habeas Data:** Inclusión estricta de copropietarios con poder firmado.
             3. **Inspeccion de Ajuste:** Visita del perito designado para dictamen tecnico.
-            4. **Acta de Liquidacion:** Emision de calendario de resarcimiento.
+            4. **Acta de Liquidación:** Emision de calendario de resarcimiento.
         """)
 
   st.write("---")
-  st.subheader("Expediente para Radicacion al Ajustador")
-  cols_exp = ["torre", "unidad", "propietario", "cedula", "telefono", "correo"]
+  st.subheader("Expediente para Radicación al Ajustador")
+  cols_exp = ["torre", "unidad", "propietario", "cedula", "teléfono", "correo"]
   cols_validas = [c for c in cols_exp if c in df.columns]
 
   df_seguro = df[
@@ -1110,11 +1110,11 @@ elif pagina == "Poliza y Reclamacion de Seguros":
 # -------------------------------------------------------------
 # MODULO 4: PLANOS ESTRUCTURALES E INSPECCION (CON CARGA DE IMAGEN)
 # -------------------------------------------------------------
-elif pagina == "Planos Estructurales e Inspeccion":
+elif pagina == "Planos Estructurales ":
   st.subheader("Planos Estructurales y Puntos Criticos de Inspeccion")
   st.write(
       "Consulte la distribucion arquitectonica y visualice las fotos o esquemas"
-      " tecnicos de los planos estructurales de cada bloque."
+      " técnicos de los planos estructurales de cada bloque."
   )
 
   torre_plano = st.selectbox(
@@ -1130,8 +1130,8 @@ elif pagina == "Planos Estructurales e Inspeccion":
 
   with col_plano:
     opcion_vista = st.radio(
-        "Modo de Visualizacion:",
-        ["Foto del Plano Estructural", "Elevacion Esquematica por Niveles"],
+        "Modo de Visualización:",
+        ["Foto del Plano Estructural", "Elevación Esquemática por Niveles"],
         horizontal=True,
     )
 
@@ -1227,11 +1227,11 @@ elif pagina == "Planos Estructurales e Inspeccion":
 
   with col_crit:
     st.markdown("""
-            ### Puntos de Control Tecnico
+            ### Puntos de Control Técnico
             * **Pisos Superiores:** Cubiertas y remates en Piso 5 (Torres A/B) y Piso 6 (Torre C).
-            * **Juntas Sismicas:** Verificacion de dilatacion entre bloques.
+            * **Juntas Sismicas:** Verificación de dilatacion entre bloques.
             * **Mamposteria:** Revision de fisuras a 45° vs. fisuras de acabado superficial.
-            * **Redes:** Comprobacion de integridad en bajantes y gas.
+            * **Redes:** Comprobación de integridad en bajantes y gas.
         """)
   mostrar_banner_habeas_data()
 
@@ -1241,7 +1241,7 @@ elif pagina == "Planos Estructurales e Inspeccion":
 elif pagina == "Asistente Virtual":
   st.subheader("💬 Asistente Comunitario")
   st.caption(
-      "Consulte sobre las 3 torres (29 aptos), zonas comunes, seguro o comites"
+      "Consulte sobre las 3 torres (29 aptos), zonas comunes, seguro o comités"
       " de trabajo."
   )
 
@@ -1273,8 +1273,8 @@ elif pagina == "Asistente Virtual":
         "inscrib" in p_low
         or "postular" in p_low
         or "participar" in p_low
-        or "comite" in p_low
-        or "voluntari" in p_low
+        or "comité" in p_low
+        or "voluntario" in p_low
     ):
       resp = (
           "Puedes ver los integrantes y postularte en la pestaña 'Participa en"
@@ -1283,7 +1283,7 @@ elif pagina == "Asistente Virtual":
       )
     elif "urgente" in p_low or "semaforo" in p_low or "pendiente" in p_low:
       resp = (
-          "Las prioridades urgentes son: consolidar el censo de los 29"
+          "Las prioridades urgentes son: consolidar el censo de los 28"
           " apartamentos reales, radicar poderes para la aseguradora e"
           " inspeccionar Torres B y C."
       )
