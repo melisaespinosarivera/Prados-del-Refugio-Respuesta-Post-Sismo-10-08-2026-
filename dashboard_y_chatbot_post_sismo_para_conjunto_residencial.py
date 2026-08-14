@@ -325,15 +325,15 @@ ARCHIVO_INSCRIPCIONES = "inscripciones_voluntarios.csv"
 
 
 def guardar_inscripcion(
-    nombre, torre, apto, telefono, profesion, mesa, disponibilidad
+    nombre, torre, apto, télefono, profesión, mesa, disponibilidad
 ):
   registro = {
       "Fecha_Registro": [datetime.now().strftime("%Y-%m-%d %H:%M:%S")],
       "Nombre_Completo": [nombre],
       "Torre": [torre],
       "Apartamento": [apto],
-      "Telefono": [telefono],
-      "Profesion_Habilidad": [profesion],
+      "Teléfono": [telefono],
+      "Profesión_Habilidad": [profesion],
       "Mesa_Asignada": [mesa],
       "Disponibilidad": [disponibilidad],
   }
@@ -356,8 +356,8 @@ def cargar_inscripciones():
         "Nombre_Completo",
         "Torre",
         "Apartamento",
-        "Telefono",
-        "Profesion_Habilidad",
+        "Teléfono",
+        "Profesión_Habilidad",
         "Mesa_Asignada",
         "Disponibilidad",
     ])
@@ -563,7 +563,7 @@ if pagina == "Panel de Control y Diagnóstico":
             <div class="kpi-container">
                 <div class="kpi-label">Censo Unidades Privadas</div>
                 <div class="kpi-value">{total_censados}</div>
-                <div class="kpi-sub">Torres A (9), B (9), C (11)</div>
+                <div class="kpi-sub">Torres A (9), B (9), C (10)</div>
             </div>
         """,
         unsafe_allow_html=True,
@@ -658,8 +658,8 @@ if pagina == "Panel de Control y Diagnóstico":
   df_vista = df_priv[df_priv["torre"] == torre_sel][cols_exist].rename(
       columns={
           "unidad": "Apartamento",
-          "inmueble_afectado": "Afectacion Reportada",
-          "autoriza_datos": "Autorizacion Poliza",
+          "inmueble_afectado": "Afectación Reportada",
+          "autoriza_datos": "Autorización Póliza",
       }
   )
   st.dataframe(df_vista, use_container_width=True, hide_index=True)
